@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductsController!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>liste des produits</h1>
+		<a href=" {{path('app_products.add')}} ">Ajouter un produit</a>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Image</th>
+					<th scope="col">Name</th>
+					<th scope="col">Prix</th>
+					<th scope="col">Solde</th>
+					<th scope="col">Stock</th>
+					<th scope="col">Category</th>
+					<th scope="col">Commandes</th>
+					<th scope="col" class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product in products %}
+					<tr class="table-active">
+						<td class="td">
+							<a href=" {{ path('app_products.show', {id: product.id} ) }} "><img src="{{ asset('uploads/images/' ~ product.getImage) }}" alt="" class="images-table"></a>
+						</td>
+						<td>
+							{{ product.name }}
+						</td>
+						<td>{{ product.price }}</td>
+						<td>
+							{% if product.solde ==  1 %}
+								<span class="badge text-bg-success">En solde</span>
+							{% endif %}
+						</td>
+						<td>{{ product.stock }}</td>
+						<td>{{ product.category }}</td>
+						<td>
+							{% if product.orders is same as null %}
+								Pas de commande
+							{% endif %}
+							{{ product.orders }}
+						</td>
+						<td class="text-center">
+							<a href=" {{ path('app_products.edit', {id: product.id} ) }} " class="btn btn-info">Modifier</a>
+
+							<form action="{{ path('app_products.delete', { id: product.id }) }}" method="post" style="display:inline;" onclick="return confirm('Confirmer la suppression du produit !')">
+								{# the argument of csrf_token() is an arbitrary string used to generate the token #}
+								<input type="hidden" name="_method" id="" value="DELETE">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id ) }}"/>
+
+								<button type="submit" class="btn btn-warning">Supprimer</button>
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+.images {
+    max-width: 40%!important;
+}
+
+.img {
+    width: 100%;
+} 
+
+.images-table {
+    max-width: 100%;
+}
+
+.td {
+    width: 100px;
+}
+
+.edit {
+    display: flex;
+}
+
+.space {
+    margin-right: 15px;
+}
+
+.inline {
+    display: inline;
+}
