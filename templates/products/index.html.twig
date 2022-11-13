@@ -15,7 +15,14 @@
 					<th scope="col">Prix</th>
 					<th scope="col">Solde</th>
 					<th scope="col">Stock</th>
-					<th scope="col">Category</th>
+					<th scope="col">
+						<select name="cat" id="cat">
+							{% for product in products %}
+								<option value=""> {{ product.category }} </option>
+							{% endfor %}
+						</select>
+
+					</th>
 					<th scope="col">Commandes</th>
 					<th scope="col" class="text-center">Actions</th>
 				</tr>
@@ -46,7 +53,8 @@
 						<td class="text-center">
 							<a href=" {{ path('app_products.edit', {id: product.id} ) }} " class="btn btn-info">Modifier</a>
 
-							<form action="{{ path('app_products.delete', { id: product.id }) }}" method="post" style="display:inline;" onclick="return confirm('Confirmer la suppression du produit !')">
+							<form
+								action="{{ path('app_products.delete', { id: product.id }) }}" method="post" style="display:inline;" onclick="return confirm('Confirmer la suppression du produit !')">
 								{# the argument of csrf_token() is an arbitrary string used to generate the token #}
 								<input type="hidden" name="_method" id="" value="DELETE">
 								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id ) }}"/>
